@@ -1,0 +1,37 @@
+name: Android CI (Build & Test)
+
+# Dispara o workflow em pushes ou PRs para a branch 'main'
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # Roda em um servidor Ubuntu virtual
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o seu código do GitHub para a máquina virtual
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Configura o Java (JDK 17) necessário para rodar o Gradle
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3. Dá permissão de execução para o 'gradlew' (necessário no Linux)
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      # 4. (Opcional, mas bom) Roda os testes unitários
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
+
+      # 5. Roda o build de debug (compila o app)
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
