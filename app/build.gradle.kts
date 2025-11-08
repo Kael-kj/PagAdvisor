@@ -3,17 +3,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
     namespace = "com.Kenji.pagadvisor"
     // Definimos as versões diretamente com números
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.Kenji.pagadvisor"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -41,10 +42,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        // Esta versão do compiler é compatível com o Kotlin 2.2.21
-        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
@@ -94,5 +91,7 @@ dependencies {
 
     // Testes de Instrumentação (AndroidTest)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    // ... (outras dependências de teste como espresso)
+
+    // Lista de Icon
+    implementation("androidx.compose.material:material-icons-extended")
 }

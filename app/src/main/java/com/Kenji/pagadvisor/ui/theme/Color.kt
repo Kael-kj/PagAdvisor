@@ -2,10 +2,14 @@ package com.Kenji.pagadvisor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// --- Cores da Identidade Visual (Definidas por Você) ---
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Cor Primária (Botões, Contornos)
+val PagYellow = Color(0xFFF5B615)
+// Cor para texto em cima do amarelo
+val PagWhite = Color(0xFFFFFFFF)
+// Cores do Gradiente da Auth
+val PagGradientTop = Color(0xFFDDE460)
+val PagGradientBottom = Color(0xFFA7DCDA)
+// Cor de Texto Padrão
+val PagBlack = Color(0xFF000000)
