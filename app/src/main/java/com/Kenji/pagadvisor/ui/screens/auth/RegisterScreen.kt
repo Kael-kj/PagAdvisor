@@ -41,11 +41,10 @@ fun RegisterScreen(
 ) {
     // Observa o evento de navegação
     LaunchedEffect(key1 = true) {
-        viewModel.navigateToLoginEvent.collect {
-            navController.navigate(Screen.Login.route) {
+        viewModel.navigateToProfileSetupEvent.collect {
+            navController.navigate(Screen.ProfileSetup.route) {
                 // Limpa a pilha para que o usuário não "volte" para o cadastro
-                popUpTo(Screen.Login.route) { inclusive = true }
-                launchSingleTop = true
+                popUpTo(Screen.Register.route) { inclusive = true }
             }
         }
     }

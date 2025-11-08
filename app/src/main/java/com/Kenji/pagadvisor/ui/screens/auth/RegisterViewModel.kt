@@ -8,15 +8,15 @@ import kotlinx.coroutines.launch
 
 class RegisterViewModel : ViewModel(){
     // Evento para navegar de volta ao Login após o sucesso
-    private val _navigateToLoginEvent = MutableSharedFlow<Unit>()
-    val navigateToLoginEvent = _navigateToLoginEvent.asSharedFlow()
+    private val _navigateToProfileSetupEvent = MutableSharedFlow<Unit>()
+    val navigateToProfileSetupEvent = _navigateToProfileSetupEvent.asSharedFlow()
 
     fun onRegisterClicked() {
         // TODO: Adicionar lógica real de registro (API, etc.)
 
         // Por enquanto, apenas simula o sucesso e emite o evento
         viewModelScope.launch {
-            _navigateToLoginEvent.emit(Unit)
+            _navigateToProfileSetupEvent.emit(Unit)
         }
     }
 }

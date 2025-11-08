@@ -10,6 +10,10 @@ sealed class Screen(val route: String) {
     object ForgotPassword : Screen("forgot_password_screen")
     object ConfirmPassword : Screen("confirm_password_screen")
 
+    // Fluxo Profile Setup
+
+    object ProfileSetup : Screen("profile_setup_screen")
+    object ProfileInterests : Screen("profile_interests_screen")
     // Tela Principal
     object Home : Screen("home_screen")
 }

@@ -31,7 +31,8 @@ fun PagOutlinedTextField(
     isError: Boolean = false,
     supportingText: @Composable (() -> Unit)? = null,
     singleLine: Boolean = true,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    readOnly: Boolean = false
 ) {
     OutlinedTextField(
         value = value,

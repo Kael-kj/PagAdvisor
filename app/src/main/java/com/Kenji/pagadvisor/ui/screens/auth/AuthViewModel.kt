@@ -21,7 +21,6 @@ class AuthViewModel : ViewModel() {
         viewModelScope.launch {
             // TODO: Adicionar lógica de login real aqui (Fase 2/3)
 
-            // Emite o evento para navegar para a Home
             _navigationEvent.emit(Unit)
         }
     }

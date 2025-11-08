@@ -53,6 +53,8 @@ android {
 // Definimos as dependências diretamente com suas strings
 dependencies {
 
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter)
     // Compose BOM (Bill of Materials) - Esta ainda é a melhor prática
     // O BOM gerencia as versões de todas as bibliotecas do Compose
     val composeBom = platform("androidx.compose:compose-bom:2025.10.01")
@@ -84,10 +86,22 @@ dependencies {
     // DataStore (para salvar login/onboarding)
     implementation("androidx.datastore:datastore-preferences:1.2.0-rc01")
 
-    // Testes Unitários
+    // --- TESTES UNITÁRIOS (src/test) ---
+    // A biblioteca principal do JUnit4 (NÃO JUnit5)
     testImplementation("junit:junit:4.13.2")
-    testImplementation("io.mockk:mockk:1.13.11")
+
+    // Para testar Coroutines e ViewModels (viewModelScope)
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+
+    // Para executar regras de teste do Android (como LiveData/Flow)
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+
+    // Biblioteca para "mockar" (fingir) classes e repositórios
+    testImplementation("io.mockk:mockk:1.13.11")
+
+    // --- TESTES DE INSTRUMENTAÇÃO (src/androidTest) ---
+
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
     // Testes de Instrumentação (AndroidTest)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
