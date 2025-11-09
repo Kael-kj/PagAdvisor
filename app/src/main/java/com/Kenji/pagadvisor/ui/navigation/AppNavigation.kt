@@ -1,6 +1,8 @@
 package com.Kenji.pagadvisor.ui.navigation
 
+import android.app.Application
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,19 +10,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.compose.ui.platform.LocalContext
-import android.app.Application
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import com.Kenji.pagadvisor.ui.screens.auth.*
-import com.Kenji.pagadvisor.ui.screens.onboarding.*
-import com.Kenji.pagadvisor.ui.screens.splash.*
-import com.Kenji.pagadvisor.ui.screens.home.*
+import com.Kenji.pagadvisor.ui.screens.auth.AuthScreen
+import com.Kenji.pagadvisor.ui.screens.auth.ConfirmPasswordScreen
+import com.Kenji.pagadvisor.ui.screens.auth.ForgotPasswordScreen
+import com.Kenji.pagadvisor.ui.screens.auth.ProfileInterestsScreen
+import com.Kenji.pagadvisor.ui.screens.auth.ProfileSetupScreen
+import com.Kenji.pagadvisor.ui.screens.auth.ProfileSetupViewModel
+import com.Kenji.pagadvisor.ui.screens.auth.RegisterScreen
+import com.Kenji.pagadvisor.ui.screens.home.HomeScreen
+import com.Kenji.pagadvisor.ui.screens.home.HomeViewModelFactory
 import com.Kenji.pagadvisor.ui.screens.notifications.NotificationScreen
+import com.Kenji.pagadvisor.ui.screens.onboarding.OnboardingScreen
 import com.Kenji.pagadvisor.ui.screens.profile.ProfileScreen
+import com.Kenji.pagadvisor.ui.screens.splash.SplashScreen
 
 
 // Define uma rota "mãe" para o fluxo de autenticação

@@ -65,8 +65,6 @@ fun HomeScreen(
     }
 }
 
-// --- (BottomNavigationBar e ViewModelFactory permanecem iguais) ---
-// (Certifique-se que o HomeViewModelFactory está em seu próprio arquivo)
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     NavigationBar(

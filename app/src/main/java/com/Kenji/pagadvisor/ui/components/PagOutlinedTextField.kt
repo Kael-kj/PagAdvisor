@@ -1,6 +1,5 @@
 package com.Kenji.pagadvisor.ui.components
 
-import android.R.attr.enabled
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.Kenji.pagadvisor.ui.theme.PagAdvisorTheme
 import com.Kenji.pagadvisor.ui.theme.PagAzul
 import com.Kenji.pagadvisor.ui.theme.PagWhite
-import com.Kenji.pagadvisor.ui.theme.PagYellow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

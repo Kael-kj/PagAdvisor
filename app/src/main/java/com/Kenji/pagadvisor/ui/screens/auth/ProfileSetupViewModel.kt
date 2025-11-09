@@ -2,12 +2,12 @@ package com.Kenji.pagadvisor.ui.screens.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.Kenji.pagadvisor.domain.usecase.SaveUserProfileUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import com.Kenji.pagadvisor.domain.usecase.SaveUserProfileUseCase
 
 // Define os ramos de negócio que o usuário pode escolher
 val businessTypes = listOf("Restaurante", "Loja de Varejo", "Serviços", "Outro")

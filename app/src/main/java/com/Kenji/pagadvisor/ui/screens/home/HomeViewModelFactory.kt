@@ -31,13 +31,13 @@ class HomeViewModelFactory(private val app: Application) : ViewModelProvider.Fac
         // 👇 UseCases de Metas (com nomes atualizados e novos)
         val getWeeklyGoalUseCase = GetWeeklyGoalUseCase(salesRepo)
         val setWeeklyGoalUseCase = SetWeeklyGoalUseCase(salesRepo)
-        // (Vamos criar os UseCases de Monthly/Annual depois, por enquanto o ViewModel acessa o repo)
+
 
         return when {
             modelClass.isAssignableFrom(DashboardViewModel::class.java) -> {
                 DashboardViewModel(
                     getMockedSalesUseCase,
-                    getWeeklyGoalUseCase, // 👈 Nome atualizado
+                    getWeeklyGoalUseCase,
                     salesRepo,
                     getReceivablesUseCase,
                     getCustomerStatsUseCase
@@ -46,8 +46,8 @@ class HomeViewModelFactory(private val app: Application) : ViewModelProvider.Fac
 
             modelClass.isAssignableFrom(GoalViewModel::class.java) -> {
                 GoalViewModel(
-                    getWeeklyGoalUseCase, // 👈 Nome atualizado
-                    setWeeklyGoalUseCase, // 👈 Nome atualizado
+                    getWeeklyGoalUseCase,
+                    setWeeklyGoalUseCase,
                     getMockedSalesUseCase,
                     salesRepo // Injeta o repositório para salvar todas as metas
                 ) as T
@@ -57,7 +57,7 @@ class HomeViewModelFactory(private val app: Application) : ViewModelProvider.Fac
                 ChatViewModel(
                     GetAiAnalysisUseCase(advisorRepo),
                     getMockedSalesUseCase,
-                    getWeeklyGoalUseCase, // 👈 Nome atualizado
+                    getWeeklyGoalUseCase,
                     getUserProfileUseCase,
                     salesRepo
                 ) as T

@@ -1,28 +1,46 @@
 package com.Kenji.pagadvisor.ui.screens.profile
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.Kenji.pagadvisor.ui.components.PagOutlinedTextField
 import com.Kenji.pagadvisor.ui.components.PagPrimaryButton
 import com.Kenji.pagadvisor.ui.navigation.Screen
-import com.Kenji.pagadvisor.ui.screens.auth.BusinessDropdown // Reusa o Dropdown
-import com.Kenji.pagadvisor.ui.screens.auth.productCategories // Reusa as categorias
+import com.Kenji.pagadvisor.ui.screens.auth.BusinessDropdown
+import com.Kenji.pagadvisor.ui.screens.auth.productCategories
 import com.Kenji.pagadvisor.ui.screens.home.HomeViewModelFactory
-import com.Kenji.pagadvisor.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -109,7 +127,6 @@ fun ProfileScreen(
                 }
             }
 
-            // (Aqui falta a lógica de "Outro Produto")
 
             Spacer(modifier = Modifier.height(32.dp))
 

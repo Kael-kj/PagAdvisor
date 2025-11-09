@@ -41,7 +41,6 @@ class ProfileViewModel(
         }
     }
 
-    // (As funções de 'on...Changed' são idênticas ao ProfileSetupViewModel)
     fun onBusinessNameChanged(name: String) { _uiState.update { it.copy(businessName = name) } }
     fun onBusinessTypeSelected(type: String) { _uiState.update { it.copy(businessType = type) } }
     fun onOtherBusinessTypeChanged(otherType: String) { _uiState.update { it.copy(otherBusinessType = otherType) } }
