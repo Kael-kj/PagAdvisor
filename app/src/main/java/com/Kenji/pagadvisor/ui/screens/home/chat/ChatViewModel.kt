@@ -6,26 +6,29 @@ import com.Kenji.pagadvisor.data.remote.dto.AnalysisRequest
 import com.Kenji.pagadvisor.domain.repository.SalesRepository // 👈 IMPORTADO
 import com.Kenji.pagadvisor.domain.usecase.GetAiAnalysisUseCase
 import com.Kenji.pagadvisor.domain.usecase.GetMockedSalesUseCase
-import com.Kenji.pagadvisor.domain.usecase.GetSalesGoalUseCase
+import com.Kenji.pagadvisor.domain.usecase.GetWeeklyGoalUseCase
 import com.Kenji.pagadvisor.domain.usecase.GetUserProfileUseCase // 👈 IMPORTADO
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 data class ChatUiState(
     val messages: List<ChatMessage> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val suggestedReplies: List<String> = emptyList(),
+    val isAwaitingPlanConfirmation: Boolean = false
 )
 
 class ChatViewModel(
     private val getAiAnalysisUseCase: GetAiAnalysisUseCase,
     private val getMockedSalesUseCase: GetMockedSalesUseCase,
-    private val getSalesGoalUseCase: GetSalesGoalUseCase,
-    private val getUserProfileUseCase: GetUserProfileUseCase, // 👈 DEPENDÊNCIA ADICIONADA
-    private val salesRepository: SalesRepository // 👈 DEPENDÊNCIA ADICIONADA
+    private val getSalesGoalUseCase: GetWeeklyGoalUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val salesRepository: SalesRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatUiState())
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
+    private var lastAiMessage: String? = null
 
     init {
         _uiState.update {
@@ -37,10 +40,24 @@ class ChatViewModel(
         if (userQuery.isBlank() || _uiState.value.isLoading) return
 
         val userMessage = ChatMessage(userQuery, isFromUser = true)
+
+        val currentState = _uiState.value
+        val isReply = currentState.suggestedReplies.any { it == userQuery }
+
+        // Se a IA estava esperando uma confirmação (ex: "sim")
+        // OU se o usuário clicou em um chip, nós enviamos o contexto.
+        val context = if (currentState.isAwaitingPlanConfirmation || isReply) {
+            lastAiMessage
+        } else {
+            null
+        }
+
         _uiState.update {
             it.copy(
                 messages = it.messages + userMessage,
-                isLoading = true
+                isLoading = true,
+                suggestedReplies = emptyList(), // Limpa os chips
+                isAwaitingPlanConfirmation = false // Reseta a memória
             )
         }
 
@@ -49,27 +66,37 @@ class ChatViewModel(
                 // --- LÓGICA V2: Busca todos os dados ---
                 val sales = getMockedSalesUseCase()
                 val weeklyGoal = getSalesGoalUseCase().first()
-                val dailyGoal = salesRepository.getDailyGoal().first() // 👈 NOVO
-                val profile = getUserProfileUseCase().first() // 👈 NOVO
+                val dailyGoal = salesRepository.getDailyGoal().first()
+                val profile = getUserProfileUseCase().first()
+
+                val context = if (isReply) lastAiMessage else null
 
                 // Monta a nova requisição (v2)
                 val request = AnalysisRequest(
                     userQuery = userQuery,
                     salesGoal = weeklyGoal,
                     weeklySales = sales,
-                    businessType = profile.businessType, // 👈 NOVO
-                    businessProducts = profile.businessProducts.toList(), // 👈 NOVO
-                    dailyGoal = dailyGoal // 👈 NOVO
+                    businessType = profile.businessType,
+                    businessProducts = profile.businessProducts.toList(),
+                    dailyGoal = dailyGoal,
+                    context = context
                 )
 
                 // 3. Recebe a resposta da IA
                 val response = getAiAnalysisUseCase(request)
-                val aiMessage = ChatMessage(response.aiReply, isFromUser = false)
+                val aiMessageText = response.aiReply
+                val aiMessage = ChatMessage(aiMessageText, isFromUser = false)
+
+                lastAiMessage = aiMessageText
+
+                val plans = parsePlansFromResponse(aiMessageText)
 
                 _uiState.update {
                     it.copy(
                         messages = it.messages + aiMessage,
-                        isLoading = false
+                        isLoading = false,
+                        suggestedReplies = plans,
+                        isAwaitingPlanConfirmation = plans.isNotEmpty() || aiMessageText.endsWith("?")
                     )
                 }
             } catch (e: Exception) {
@@ -82,5 +109,12 @@ class ChatViewModel(
                 }
             }
         }
+    }
+    /**
+     * Procura por [PLANO: ...] na resposta da IA usando Regex.
+     */
+    private fun parsePlansFromResponse(text: String): List<String> {
+        val regex = Regex("\\[PLANO: (.*?)\\]")
+        return regex.findAll(text).map { it.groupValues[1] }.toList()
     }
 }

@@ -75,7 +75,7 @@ fun ProfileInterestsScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBrush)
+            .background(PagVerde)
             .verticalScroll(rememberScrollState()),
         contentAlignment = Alignment.Center
     ) {

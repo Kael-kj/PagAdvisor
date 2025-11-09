@@ -14,5 +14,7 @@ data class AnalysisRequest(
     @SerializedName("businessProducts")
     val businessProducts: List<String>,
     @SerializedName("dailyGoal")
-    val dailyGoal: Double
+    val dailyGoal: Double,
+    @SerializedName("context")
+    val context: String? = null
 )

@@ -3,95 +3,108 @@ package com.Kenji.pagadvisor.ui.screens.home
 import android.app.Application
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
+import com.Kenji.pagadvisor.ui.navigation.Screen // Importe o Screen
 import com.Kenji.pagadvisor.ui.screens.home.chat.ChatScreen
 import com.Kenji.pagadvisor.ui.screens.home.chat.ChatViewModel
 import com.Kenji.pagadvisor.ui.screens.home.dashboard.DashboardScreen
 import com.Kenji.pagadvisor.ui.screens.home.dashboard.DashboardViewModel
 import com.Kenji.pagadvisor.ui.screens.home.goals.GoalScreen
 import com.Kenji.pagadvisor.ui.screens.home.goals.GoalViewModel
-import com.Kenji.pagadvisor.ui.screens.home.HomeViewModelFactory
-// --- Definição das Rotas da Home ---
-sealed class HomeRoute(val route: String, val label: String, val icon: ImageVector) {
-    object Dashboard : HomeRoute("dashboard", "Dashboard", Icons.Default.Dashboard)
-    object Goals : HomeRoute("goals", "Metas", Icons.Default.TrackChanges)
-    object Chat : HomeRoute("chat", "Chat", Icons.Default.Chat)
-}
-val homeScreens = listOf(HomeRoute.Dashboard, HomeRoute.Goals, HomeRoute.Chat)
+import com.Kenji.pagadvisor.ui.theme.PagDarkGray
+import com.Kenji.pagadvisor.ui.theme.PagYellow
 
-
-// --- A Tela Principal ---
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
-    val homeNavController = rememberNavController()
-
-    // Instancia nossa Factory
+fun HomeScreen(
+    navController: NavController // O NavController PRINCIPAL
+) {
+    val homeNavController = rememberNavController() // O NavController INTERNO
     val context = LocalContext.current
     val factory = HomeViewModelFactory(context.applicationContext as Application)
 
+    // 1. O scrollBehavior FOI REMOVIDO daqui.
+
     Scaffold(
+        // 2. O topBar FOI REMOVIDO daqui.
+        // 3. O modifier nestedScroll FOI REMOVIDO daqui.
+
         bottomBar = {
             BottomNavigationBar(navController = homeNavController)
         }
     ) { innerPadding ->
-        // O NavHost interno que gerencia as 3 telas
         NavHost(
             navController = homeNavController,
             startDestination = HomeRoute.Dashboard.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+            // 4. Passamos o NavController PRINCIPAL para o Dashboard
             composable(HomeRoute.Dashboard.route) {
                 val vm: DashboardViewModel = viewModel(factory = factory)
-                DashboardScreen(vm)
+                DashboardScreen(vm, navController) // Passa o navController principal
             }
+            // 5. Removemos o scrollBehavior das outras telas
             composable(HomeRoute.Goals.route) {
                 val vm: GoalViewModel = viewModel(factory = factory)
-                GoalScreen(vm)
+                GoalScreen(vm) // Não precisa mais do scrollBehavior
             }
             composable(HomeRoute.Chat.route) {
                 val vm: ChatViewModel = viewModel(factory = factory)
-                ChatScreen(vm)
+                ChatScreen(vm) // Não precisa mais do scrollBehavior
             }
         }
     }
 }
 
-// --- Componente da Barra de Navegação ---
+// --- (BottomNavigationBar e ViewModelFactory permanecem iguais) ---
+// (Certifique-se que o HomeViewModelFactory está em seu próprio arquivo)
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-    NavigationBar {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+    ) {
         homeScreens.forEach { screen ->
             NavigationBarItem(
-                icon = { Icon(screen.icon, contentDescription = screen.label) },
-                label = { Text(screen.label) },
-                selected = currentRoute == screen.route,
+                icon = {
+                    Icon(
+                        screen.icon,
+                        contentDescription = screen.label,
+                        tint = if (navController.currentDestination?.route == screen.route) PagYellow else PagDarkGray
+                    )
+                },
+                label = {
+                    Text(
+                        screen.label,
+                        color = if (navController.currentDestination?.route == screen.route) PagYellow else PagDarkGray
+                    )
+                },
+                selected = navController.currentDestination?.route == screen.route,
                 onClick = {
-                    navController.navigate(screen.route) {
-                        // Evita empilhar a mesma tela várias vezes
+                    navController.navigate(route = screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true
                     }
-                }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.surface,
+                    selectedIconColor = PagYellow,
+                    selectedTextColor = PagYellow,
+                    unselectedIconColor = PagDarkGray,
+                    unselectedTextColor = PagDarkGray
+                )
             )
         }
     }

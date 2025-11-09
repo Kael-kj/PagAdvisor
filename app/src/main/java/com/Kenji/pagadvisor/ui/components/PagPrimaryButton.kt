@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.Kenji.pagadvisor.ui.theme.PagAdvisorTheme
+import com.Kenji.pagadvisor.ui.theme.PagAzul
 import com.Kenji.pagadvisor.ui.theme.PagWhite
 import com.Kenji.pagadvisor.ui.theme.PagYellow
 
@@ -28,7 +29,7 @@ fun PagPrimaryButton(
             .height(50.dp), // Uma altura padrão para consistência
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
-            containerColor = PagYellow, // Cor de fundo
+            containerColor = PagAzul, // Cor de fundo
             contentColor = PagWhite,    // Cor do texto
             disabledContainerColor = PagYellow.copy(alpha = 0.5f), // Cor quando desabilitado
             disabledContentColor = PagWhite.copy(alpha = 0.7f)

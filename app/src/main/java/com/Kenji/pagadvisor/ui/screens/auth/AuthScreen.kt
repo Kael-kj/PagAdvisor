@@ -33,6 +33,11 @@ import com.Kenji.pagadvisor.ui.theme.PagWhite // Importe a cor branca do seu tem
 import com.Kenji.pagadvisor.ui.theme.PagYellow
 import com.Kenji.pagadvisor.ui.components.PagOutlinedTextField
 import com.Kenji.pagadvisor.ui.components.PagPrimaryButton
+import com.Kenji.pagadvisor.ui.theme.PagAzul
+import com.Kenji.pagadvisor.ui.theme.PagDarkGray
+import com.Kenji.pagadvisor.ui.theme.PagLightGray
+import com.Kenji.pagadvisor.ui.theme.PagMediumGray
+import com.Kenji.pagadvisor.ui.theme.PagVerde
 
 @Composable
 fun AuthScreen(
@@ -90,7 +95,7 @@ fun AuthScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBrush)
+            .background(PagWhite)
             .padding(horizontal = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -179,7 +184,7 @@ fun AuthScreenContent(
         TextButton(onClick = onForgotPasswordClicked) {
             Text(
                 "Esqueceu sua senha?",
-                color = PagYellow,
+                color = PagAzul,
                 textAlign = TextAlign.Center
             )
         }
@@ -187,7 +192,7 @@ fun AuthScreenContent(
         Spacer(modifier = Modifier.height(24.dp))
         Divider(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            color = PagYellow
+            color = PagAzul
         )
         Spacer(modifier = Modifier.height(24.dp))
 

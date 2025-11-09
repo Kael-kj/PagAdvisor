@@ -4,6 +4,7 @@ import com.Kenji.pagadvisor.data.local.UserPreferencesRepository
 import com.Kenji.pagadvisor.data.remote.dto.DailySale
 import com.Kenji.pagadvisor.domain.repository.SalesRepository
 import kotlinx.coroutines.flow.Flow
+import com.Kenji.pagadvisor.domain.usecase.CustomerStats
 
 // Vamos precisar injetar o UserPreferencesRepository (via Hilt ou manualmente)
 // Por enquanto, vamos assumir que ele será injetado
@@ -23,14 +24,6 @@ class SalesRepositoryImpl(
             DailySale(dayOfWeek = "Dom", totalSold = 80.00)
         )
     }
-
-    override suspend fun setSalesGoal(goal: Double) {
-        preferences.setSalesGoal(goal)
-    }
-
-    override fun getSalesGoal(): Flow<Double> {
-        return preferences.getSalesGoal()
-    }
     override suspend fun saveUserProfile(name: String, type: String, products: Set<String>) {
         preferences.saveUserProfile(name, type, products)
     }
@@ -46,11 +39,42 @@ class SalesRepositoryImpl(
     override fun getBusinessProducts(): Flow<Set<String>> {
         return preferences.getBusinessProducts()
     }
+
+    override suspend fun getReceivables(): Double {
+        return 4300.00
+    }
+
+    override suspend fun getCustomerStats(): CustomerStats {
+        return CustomerStats(
+            totalCustomers = 120,
+            newCustomersThisWeek = 5
+        )
+    }
+    override suspend fun setWeeklyGoal(goal: Double) {
+        preferences.setWeeklyGoal(goal)
+    }
     override suspend fun setDailyGoal(dailyGoal: Double) {
         preferences.setDailyGoal(dailyGoal)
     }
-
     override fun getDailyGoal(): Flow<Double> {
         return preferences.getDailyGoal()
+    }
+    override fun getWeeklyGoal(): Flow<Double> {
+        return preferences.getWeeklyGoal()
+    }
+    override suspend fun setMonthlyGoal(goal: Double) {
+        preferences.setMonthlyGoal(goal)
+    }
+    override fun getMonthlyGoal(): Flow<Double> {
+        return preferences.getMonthlyGoal()
+    }
+    override suspend fun setAnnualGoal(goal: Double) {
+        preferences.setAnnualGoal(goal)
+    }
+    override fun getAnnualGoal(): Flow<Double> {
+        return preferences.getAnnualGoal()
+    }
+    override suspend fun logout() {
+        preferences.logout()
     }
 }

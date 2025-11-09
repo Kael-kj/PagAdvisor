@@ -16,4 +16,6 @@ sealed class Screen(val route: String) {
     object ProfileInterests : Screen("profile_interests_screen")
     // Tela Principal
     object Home : Screen("home_screen")
+    object Notifications : Screen("notifications_screen")
+    object Profile : Screen("profile_screen")
 }

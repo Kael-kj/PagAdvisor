@@ -9,7 +9,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-// Extensão para criar o DataStore
 private val Context.dataStore by preferencesDataStore(name = "user_preferences")
 
 class UserPreferencesRepository(context: Context) {
@@ -17,24 +16,25 @@ class UserPreferencesRepository(context: Context) {
     private val dataStore = context.dataStore
 
     // --- Chaves de Preferência ---
-    private val SALES_GOAL_KEY = doublePreferencesKey("sales_goal")
+    private val WEEKLY_GOAL_KEY = doublePreferencesKey("sales_goal") // Renomeado para clareza
     private val DAILY_GOAL_KEY = doublePreferencesKey("daily_goal")
+    private val MONTHLY_GOAL_KEY = doublePreferencesKey("monthly_goal") // 👈 NOVO
+    private val ANNUAL_GOAL_KEY = doublePreferencesKey("annual_goal") // 👈 NOVO
 
-    // 👇 NOVAS CHAVES PARA O PERFIL V2
     private val BUSINESS_NAME_KEY = stringPreferencesKey("business_name")
-    private val BUSINESS_TYPE_KEY = stringPreferencesKey("business_type") // (Inclui "Outro: [tipo]")
-    private val BUSINESS_PRODUCTS_KEY = stringSetPreferencesKey("business_products") // (Inclui "Outro: [produto]")
+    private val BUSINESS_TYPE_KEY = stringPreferencesKey("business_type")
+    private val BUSINESS_PRODUCTS_KEY = stringSetPreferencesKey("business_products")
 
     // --- Funções de Metas ---
-    suspend fun setSalesGoal(goal: Double) {
+    suspend fun setWeeklyGoal(goal: Double) {
         dataStore.edit { preferences ->
-            preferences[SALES_GOAL_KEY] = goal
+            preferences[WEEKLY_GOAL_KEY] = goal
         }
     }
 
-    fun getSalesGoal(): Flow<Double> {
+    fun getWeeklyGoal(): Flow<Double> {
         return dataStore.data.map { preferences ->
-            preferences[SALES_GOAL_KEY] ?: 0.0
+            preferences[WEEKLY_GOAL_KEY] ?: 0.0
         }
     }
 
@@ -50,47 +50,57 @@ class UserPreferencesRepository(context: Context) {
         }
     }
 
-    /**
-     * Salva todos os dados do perfil de uma vez.
-     */
-    suspend fun saveUserProfile(
-        name: String,
-        type: String,      // O tipo final (ex: "Restaurante" ou "Outro: Padaria")
-        products: Set<String> // O set final (ex: {"Alimentos", "Outro: Pão Francês"})
-    ) {
+    suspend fun setMonthlyGoal(goal: Double) {
+        dataStore.edit { preferences ->
+            preferences[MONTHLY_GOAL_KEY] = goal
+        }
+    }
+
+    fun getMonthlyGoal(): Flow<Double> {
+        return dataStore.data.map { preferences ->
+            preferences[MONTHLY_GOAL_KEY] ?: 0.0
+        }
+    }
+
+    suspend fun setAnnualGoal(goal: Double) {
+        dataStore.edit { preferences ->
+            preferences[ANNUAL_GOAL_KEY] = goal
+        }
+    }
+
+    fun getAnnualGoal(): Flow<Double> {
+        return dataStore.data.map { preferences ->
+            preferences[ANNUAL_GOAL_KEY] ?: 0.0
+        }
+    }
+
+    // --- Funções de Perfil (sem alteração) ---
+    suspend fun saveUserProfile(name: String, type: String, products: Set<String>) {
         dataStore.edit { preferences ->
             preferences[BUSINESS_NAME_KEY] = name
             preferences[BUSINESS_TYPE_KEY] = type
             preferences[BUSINESS_PRODUCTS_KEY] = products
         }
     }
-
-    /**
-     * Lê o nome do negócio.
-     */
     fun getBusinessName(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[BUSINESS_NAME_KEY] ?: ""
         }
     }
-
-    /**
-     * Lê o tipo do negócio.
-     */
     fun getBusinessType(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[BUSINESS_TYPE_KEY] ?: ""
         }
     }
-
-    /**
-     * Lê a lista (Set) de produtos salvos.
-     */
     fun getBusinessProducts(): Flow<Set<String>> {
         return dataStore.data.map { preferences ->
             preferences[BUSINESS_PRODUCTS_KEY] ?: emptySet()
         }
     }
 
-    // TODO: Adicionar lógica para salvar 'onboarding_viewed' e 'is_logged_in'
+    suspend fun logout() {
+        dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
 }

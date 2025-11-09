@@ -60,7 +60,7 @@ fun ProfileSetupScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBrush)
+            .background(PagVerde)
             .verticalScroll(rememberScrollState()), // Adicione scroll para telas menores
         contentAlignment = Alignment.Center
     ) {

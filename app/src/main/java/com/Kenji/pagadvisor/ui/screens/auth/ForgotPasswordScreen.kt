@@ -70,7 +70,7 @@ fun ForgotPasswordScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBrush)
+            .background(PagWhite)
             .padding(horizontal = 50.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally

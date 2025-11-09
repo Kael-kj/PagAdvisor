@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.Kenji.pagadvisor.ui.theme.PagAdvisorTheme
+import com.Kenji.pagadvisor.ui.theme.PagAzul
 import com.Kenji.pagadvisor.ui.theme.PagWhite
 import com.Kenji.pagadvisor.ui.theme.PagYellow
 
@@ -51,13 +52,13 @@ fun PagOutlinedTextField(
             focusedContainerColor = PagWhite,
             unfocusedContainerColor = PagWhite,
             disabledContainerColor = PagWhite,
-            focusedBorderColor = PagYellow,
-            unfocusedBorderColor = PagYellow,
-            focusedLabelColor = PagYellow,
-            unfocusedLabelColor = PagYellow,
+            focusedBorderColor = PagAzul,
+            unfocusedBorderColor = PagAzul,
+            focusedLabelColor = PagAzul,
+            unfocusedLabelColor = PagAzul,
             focusedTextColor = MaterialTheme.colorScheme.onSurface,
             unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-            cursorColor = PagYellow // Bônus: cursor da mesma cor do tema
+            cursorColor = PagAzul // Bônus: cursor da mesma cor do tema
         )
     )
 }

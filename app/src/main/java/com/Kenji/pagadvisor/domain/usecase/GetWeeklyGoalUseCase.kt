@@ -2,9 +2,8 @@ package com.Kenji.pagadvisor.domain.usecase
 
 import com.Kenji.pagadvisor.domain.repository.SalesRepository
 import kotlinx.coroutines.flow.Flow
-
-class GetSalesGoalUseCase(private val repository: SalesRepository) {
+class GetWeeklyGoalUseCase(private val repository: SalesRepository) {
     operator fun invoke(): Flow<Double> {
-        return repository.getSalesGoal()
+        return repository.getWeeklyGoal()
     }
 }
