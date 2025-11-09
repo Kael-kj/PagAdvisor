@@ -12,35 +12,32 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// --- Paleta de Cores CLARA (Light) ---
-// Esta é a paleta principal que o app usará
 private val LightColorScheme = lightColorScheme(
-    primary = PagYellow,            // Cor do Botão, Cor do Contorno/Label Focado do TextField
-    onPrimary = PagWhite,           // Cor da Fonte do Botão
+    primary = PagYellow,
+    onPrimary = PagWhite,
 
-    primaryContainer = PagYellow.copy(alpha = 0.2f), // Usado para fundos sutis (ex: ChatBubble)
+    primaryContainer = PagYellow.copy(alpha = 0.2f),
     onPrimaryContainer = PagDarkGray,
 
-    secondary = PagGradientBottom,  // Cor secundária (pode ajustar)
+    secondary = PagGradientBottom,
     onSecondary = PagBlack,
 
-    background = PagLightGray,      // Fundo padrão do app (telas Home, Dashboard)
-    onBackground = PagDarkGray,     // Texto padrão no fundo
+    background = PagLightGray,
+    onBackground = PagDarkGray,
 
-    surface = PagWhite,             // Fundo dos Cards, Menus, TextFields
-    onSurface = PagDarkGray,        // Texto *digitado* no TextField, Texto em Cards
+    surface = PagWhite,
+    onSurface = PagDarkGray,
 
-    surfaceVariant = PagLightGray,  // Fundo de componentes "neutros" (ex: ChatBubble do Bot)
+    surfaceVariant = PagLightGray,
     onSurfaceVariant = PagDarkGray,
 
-    error = Color(0xFFB00020),      // Cor de erro padrão
+    error = Color(0xFFB00020),
     onError = Color.White
 )
 
-// --- Paleta de Cores ESCURA (Dark) ---
 private val DarkColorScheme = darkColorScheme(
     primary = PagYellow,
-    onPrimary = PagDarkGray, // Texto escuro em botões amarelos fica melhor
+    onPrimary = PagDarkGray,
 
     primaryContainer = PagYellow.copy(alpha = 0.2f),
     onPrimaryContainer = PagWhite,
@@ -48,11 +45,11 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PagGradientBottom,
     onSecondary = PagBlack,
 
-    background = Color(0xFF121212), // Fundo escuro
-    onBackground = PagWhite,        // Texto claro
+    background = Color(0xFF121212),
+    onBackground = PagWhite,
 
-    surface = Color(0xFF1E1E1E),    // Fundo de Cards escuros
-    onSurface = PagWhite,           // Texto claro em Cards
+    surface = Color(0xFF1E1E1E),
+    onSurface = PagWhite,
 
     surfaceVariant = Color(0xFF333333),
     onSurfaceVariant = PagLightGray,
@@ -72,10 +69,8 @@ fun PagAdvisorTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            // Define a cor da Barra de Status (topo)
-            window.statusBarColor = colorScheme.background.toArgb() // Usa a cor de fundo do app
+            window.statusBarColor = colorScheme.background.toArgb()
 
-            // Define se os ícones da Barra de Status são escuros (para fundo claro) ou claros
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }

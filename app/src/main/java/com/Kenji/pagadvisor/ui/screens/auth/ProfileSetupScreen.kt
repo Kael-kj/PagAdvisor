@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.Kenji.pagadvisor.R // Certifique-se de que o R está importado
+import com.Kenji.pagadvisor.R
 import com.Kenji.pagadvisor.ui.components.PagOutlinedTextField
 import com.Kenji.pagadvisor.ui.components.PagPrimaryButton
 import com.Kenji.pagadvisor.ui.navigation.Screen
-import com.Kenji.pagadvisor.ui.theme.* // Importe todas as suas cores e temas
+import com.Kenji.pagadvisor.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.Kenji.pagadvisor.ui.navigation.AppNavigation // ✅ Import correto
+import com.Kenji.pagadvisor.ui.navigation.AppNavigation
 import com.Kenji.pagadvisor.ui.theme.PagAdvisorTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // A MainActivity agora SÓ chama o AppNavigation
                     AppNavigation()
                 }
             }

@@ -8,12 +8,8 @@ import com.Kenji.pagadvisor.data.repository.SalesRepositoryImpl
 import com.Kenji.pagadvisor.domain.repository.PagAdvisorRepository
 import com.Kenji.pagadvisor.domain.repository.SalesRepository
 
-/**
- * Classe Application para inicializar e prover nossas dependências (DI manual).
- */
 class PagAdvisorApp : Application() {
 
-    // Inicializa os repositórios que serão usados em todo o app
     lateinit var userPreferencesRepository: UserPreferencesRepository
     lateinit var salesRepository: SalesRepository
     lateinit var pagAdvisorRepository: PagAdvisorRepository
@@ -21,10 +17,8 @@ class PagAdvisorApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Inicializa o DataStore
         userPreferencesRepository = UserPreferencesRepository(this)
 
-        // Inicializa os repositórios
         salesRepository = SalesRepositoryImpl(userPreferencesRepository)
         pagAdvisorRepository = PagAdvisorRepositoryImpl(RetrofitClient.instance)
     }
