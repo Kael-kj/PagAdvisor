@@ -18,5 +18,5 @@ interface PagAdvisorRepository {
      * @param request O objeto [AnalysisRequest] com os dados a serem analisados.
      * @return Um [AnalysisResponse] contendo a resposta da IA.
      */
-    suspend fun getAnalysis(request: AnalysisRequest): AnalysisResponse
+    suspend fun getAnalysis(request: AnalysisRequest): List<AnalysisResponse>
 }

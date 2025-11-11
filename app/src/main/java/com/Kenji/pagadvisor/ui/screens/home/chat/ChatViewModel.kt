@@ -100,8 +100,8 @@ class ChatViewModel(
                 )
 
                 // 3. Envia a requisição e recebe a resposta da IA.
-                val response = getAiAnalysisUseCase(request)
-                val aiMessageText = response.aiReply
+                val responseList = getAiAnalysisUseCase(request)
+                val aiMessageText = responseList.first().aiReply
                 val aiMessage = ChatMessage(aiMessageText, isFromUser = false)
 
                 lastAiMessage = aiMessageText // Salva a resposta para possível uso como contexto futuro.

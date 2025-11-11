@@ -22,5 +22,6 @@ interface N8nApiService {
     @POST("webhook/21ceede0-ea6f-4ae5-a0bc-e4fefcf292c3") // Caminho do endpoint específico do webhook no n8n.
     suspend fun getAnalysis(
         @Body request: AnalysisRequest
-    ): AnalysisResponse
+    ): List<AnalysisResponse>
 }
+

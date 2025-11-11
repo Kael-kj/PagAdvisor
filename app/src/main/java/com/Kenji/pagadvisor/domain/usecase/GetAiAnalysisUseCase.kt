@@ -5,7 +5,7 @@ import com.Kenji.pagadvisor.data.remote.dto.AnalysisResponse
 import com.Kenji.pagadvisor.domain.repository.PagAdvisorRepository
 
 class GetAiAnalysisUseCase(private val repository: PagAdvisorRepository) {
-    suspend operator fun invoke(request: AnalysisRequest): AnalysisResponse {
+    suspend operator fun invoke(request: AnalysisRequest): List<AnalysisResponse> {
         return repository.getAnalysis(request)
     }
 }
